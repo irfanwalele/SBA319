@@ -8,4 +8,10 @@ router.get("/", async (req, res) => {
   res.status(200).json(reviews);
 });
 
+router.post("/", async (req, res) => {
+  const result = await db.collection("reviews").insertOne(req.body);
+
+  res.status(201).json(result);
+});
+
 export default router;
