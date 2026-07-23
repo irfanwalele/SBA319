@@ -25,4 +25,13 @@ router.patch("/:id", async (req, res) => {
   res.status(200).json(result);
 });
 
+//letting users remove a book, member, or review by its MongoDB ID.
+router.delete("/:id", async (req, res) => {
+  const query = { _id: new ObjectId(req.params.id) };
+
+  const result = await db.collection("books").deleteOne(query);
+
+  res.status(200).json(result);
+});
+
 export default router;
