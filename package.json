@@ -17,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/irfanwalele/SBA319/issues"
   },
-  "homepage": "https://github.com/irfanwalele/SBA319#readme"
+  "homepage": "https://github.com/irfanwalele/SBA319#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }
