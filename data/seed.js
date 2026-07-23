@@ -68,6 +68,38 @@ async function seedDatabase() {
     const membersCollection = db.collection("members");
     const reviewsCollection = db.collection("reviews");
 
+    // indexes for fields that may be searched often
+await booksCollection.createIndex({ title: 1 });
+await membersCollection.createIndex({ email: 1 }, { unique: true });
+await reviewsCollection.createIndex({ bookId: 1 });
+
+// validation rules for the books collection
+await db.command({
+  collMod: "books",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["title", "author", "genre", "available"],
+      properties: {
+        title: {
+          bsonType: "string",
+        },
+        author: {
+          bsonType: "string",
+        },
+        genre: {
+          bsonType: "string",
+        },
+        available: {
+          bsonType: "bool",
+        },
+      },
+    },
+  },
+  validationLevel: "strict",
+  validationAction: "error",
+});
+
     // Clear old sample data so running the seed file does not create duplicates
     await booksCollection.deleteMany({});
     await membersCollection.deleteMany({});
