@@ -1,4 +1,5 @@
 import express from "express";
+import { ObjectId } from "mongodb";
 import db from "../db.js";
 
 const router = express.Router();
@@ -12,6 +13,16 @@ router.post("/", async (req, res) => {
   const result = await db.collection("books").insertOne(req.body);
 
   res.status(201).json(result);
+});
+
+//allowing users to update an existing book, member, or review by its MongoDB ID
+router.patch("/:id", async (req, res) => {
+  const query = { _id: new ObjectId(req.params.id) };
+  const updates = { $set: req.body };
+
+  const result = await db.collection("books").updateOne(query, updates);
+
+  res.status(200).json(result);
 });
 
 export default router;
